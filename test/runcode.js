@@ -32,6 +32,32 @@ exports['hook one step'] = function (test) {
         test.ok(!err);
         test.ok(data);
         test.equal(counter, 1);
+        test.equal(data.runState.stack.length, 1);
+        test.done();
+    });
+}
+
+exports['hook one step twice'] = function (test) {
+    var vm = evmhook.vm();
+    
+    var counter = 0;
+    
+    vm.hook(function (evobj, cb) {
+        counter++;
+        cb();
+    });    
+    
+    vm.hook(function (evobj, cb) {
+        counter++;
+        cb();
+    });
+
+    test.async();
+    
+    vm.runCode('6001', function (err, data) {
+        test.ok(!err);
+        test.ok(data);
+        test.equal(counter, 2);
         test.done();
     });
 }
@@ -40,6 +66,7 @@ exports['hook two steps'] = function (test) {
     var vm = evmhook.vm();
     
     var counter = 0;
+    
     vm.hook(function (evobj, cb) {
         counter++;
         cb();
