@@ -125,3 +125,23 @@ exports['hook two steps using opcode'] = function (test) {
     });
 }
 
+exports['hook two steps using opcode name'] = function (test) {
+    var vm = evmhook.vm();
+    
+    var counter = 0;
+    
+    vm.hook({ opcode: 'push2' }, function (evobj, cb) {
+        counter++;
+        cb();
+    });
+    
+    test.async();
+    
+    vm.runCode('6001610001', function (err, data) {
+        test.ok(!err);
+        test.ok(data);
+        test.equal(counter, 1);
+        test.equal(data.runState.stack.length, 2);
+        test.done();
+    });
+}
