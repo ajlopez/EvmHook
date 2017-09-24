@@ -1,0 +1,17 @@
+{ "name": "evmhook"
+, "description": "Simple Ethereum Virtual Machine execution with hooks"
+, "keywords": [ "evm", "ethereum", "virtual machine", "hook" ]
+, "version": "0.0.1alpha"
+, "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
+, "repository": { "type": "git", "url": "git://github.com/ajlopez/EvmHook.git" }
+, "main": "./lib/evmhook.js"
+, "engines": { "node": ">= 0.12.0" }
+, "scripts": {
+    "test": "simpleunit -r ./test"
+  }
+, "dependencies": {
+  }
+, "devDependencies": {
+    "simpleunit": "0.0.7"
+  }
+}
