@@ -82,3 +82,25 @@ exports['hook two steps'] = function (test) {
         test.done();
     });
 }
+
+exports['hook two steps using program counter'] = function (test) {
+    var vm = evmhook.vm();
+    
+    var counter = 0;
+    
+    vm.hook({ pc: 2 }, function (evobj, cb) {
+        counter++;
+        cb();
+    });
+    
+    test.async();
+    
+    vm.runCode('60016002', function (err, data) {
+        test.ok(!err);
+        test.ok(data);
+        test.equal(counter, 1);
+        test.equal(data.runState.stack.length, 2);
+        test.done();
+    });
+}
+
